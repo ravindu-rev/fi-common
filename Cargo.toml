@@ -1,8 +1,9 @@
 [package]
 name = "fi-common"
 version = "0.1.0"
-authors = ["Ravindu Wijegunawardhana <ravindu.w@gmail.com>"]
-edition = "2018"
+repository = "https://github.com/Fidenz/fi_verifiable_data"
+authors = ["Ravindu Wijegunawardhana <ravindu.w@fidenz.com>"]
+edition = "2021"
 
 [lib]
 crate-type = ["cdylib", "rlib"]
