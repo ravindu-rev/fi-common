@@ -3,6 +3,8 @@ name = "fi-common"
 version = "0.0.1"
 repository = "https://github.com/ravindu-rev/fi-common"
 authors = ["Ravindu Wijegunawardhana <ravindu.w@fidenz.com>"]
+description = "Common feature project for fi libraries"
+license = "MIT OR Apache-2.0"
 edition = "2021"
 
 [lib]
