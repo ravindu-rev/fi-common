@@ -26,7 +26,10 @@ pub struct DidDocument {
 }
 
 pub trait KeyPairToDidDocument {
-    fn key_pair_to_did_doc(key_pair: &Box<dyn VerificationKey>, fingerprint: &str);
+    fn key_pair_to_did_doc(
+        key_pair: &Box<dyn VerificationKey>,
+        fingerprint: &str,
+    ) -> Result<DidDocument, Error>;
 }
 
 impl DidDocument {
