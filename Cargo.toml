@@ -1,6 +1,6 @@
 [package]
 name = "fi-common"
-version = "0.0.3"
+version = "0.0.4"
 repository = "https://github.com/ravindu-rev/fi-common"
 authors = ["Ravindu Wijegunawardhana <ravindu.w@fidenz.com>"]
 description = "Common feature project for fi libraries"
