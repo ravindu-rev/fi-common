@@ -36,7 +36,7 @@ pub struct DidDocument {
     #[wasm_bindgen(skip)]
     pub key_agreement: Vec<KeyPair>,
     #[wasm_bindgen(skip)]
-    pub services: Service,
+    pub services: Vec<Service>,
 }
 
 pub trait KeyPairToDidDocument {
