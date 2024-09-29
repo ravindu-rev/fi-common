@@ -3,13 +3,14 @@ use crate::{
     keys::{KeyPair, VerificationKey},
 };
 use serde::{Deserialize, Serialize};
+use serde_json::Value;
 use wasm_bindgen::prelude::wasm_bindgen;
 #[cfg(feature = "wasm")]
 use wasm_bindgen::JsValue;
 
 pub const DID_CONTEXT_URL: &str = "https://www.w3.org/ns/did/v1";
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize)]
 #[wasm_bindgen]
 pub struct DidDocument {
     #[serde(rename = "@context")]
@@ -34,6 +35,8 @@ pub struct DidDocument {
     #[serde(rename = "keyAgreement")]
     #[wasm_bindgen(skip)]
     pub key_agreement: Vec<KeyPair>,
+    #[wasm_bindgen(skip)]
+    pub services: Service,
 }
 
 pub trait KeyPairToDidDocument {
@@ -161,5 +164,52 @@ impl DidDocument {
     #[wasm_bindgen(getter, js_name = "keyAgreement")]
     pub fn key_agreement(&self) -> Vec<KeyPair> {
         self.key_agreement.clone()
+    }
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct Service {
+    pub id: String,
+    #[serde(rename = "type")]
+    pub _type: String,
+    pub service_endpoint: Value,
+}
+
+#[wasm_bindgen]
+impl Service {
+    #[cfg(feature = "wasm")]
+    #[wasm_bindgen(setter)]
+    pub fn set_id(&mut self, id: String) {
+        self.id = id;
+    }
+
+    #[cfg(feature = "wasm")]
+    #[wasm_bindgen(getter)]
+    pub fn id(&self) -> String {
+        self.id.clone()
+    }
+
+    #[cfg(feature = "wasm")]
+    #[wasm_bindgen(setter, js_name = "type")]
+    pub fn set_type(&mut self, _type: String) {
+        self._type = _type;
+    }
+
+    #[cfg(feature = "wasm")]
+    #[wasm_bindgen(getter, js_name = "type")]
+    pub fn _type(&self) -> String {
+        self._type.clone()
+    }
+
+    #[cfg(feature = "wasm")]
+    #[wasm_bindgen(setter, js_name = "serviceEndpoint")]
+    pub fn set_service_endpoint(&mut self, service_endpoint: Value) {
+        self.service_endpoint = service_endpoint;
+    }
+
+    #[cfg(feature = "wasm")]
+    #[wasm_bindgen(getter, js_name = "serviceEndpoint")]
+    pub fn service_endpoint(&self) -> Value {
+        self.service_endpoint.clone()
     }
 }
