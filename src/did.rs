@@ -168,10 +168,14 @@ impl DidDocument {
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
+#[wasm_bindgen]
 pub struct Service {
+    #[wasm_bindgen(skip)]
     pub id: String,
     #[serde(rename = "type")]
+    #[wasm_bindgen(skip)]
     pub _type: String,
+    #[wasm_bindgen(skip)]
     pub service_endpoint: Value,
 }
 
@@ -203,13 +207,24 @@ impl Service {
 
     #[cfg(feature = "wasm")]
     #[wasm_bindgen(setter, js_name = "serviceEndpoint")]
-    pub fn set_service_endpoint(&mut self, service_endpoint: Value) {
-        self.service_endpoint = service_endpoint;
+    pub fn set_service_endpoint(
+        &mut self,
+        service_endpoint: JsValue,
+    ) -> Result<(), serde_wasm_bindgen::Error> {
+        self.service_endpoint = match serde_wasm_bindgen::from_value(service_endpoint) {
+            Ok(val) => val,
+            Err(error) => return Err(error),
+        };
+
+        Ok(())
     }
 
     #[cfg(feature = "wasm")]
     #[wasm_bindgen(getter, js_name = "serviceEndpoint")]
-    pub fn service_endpoint(&self) -> Value {
-        self.service_endpoint.clone()
+    pub fn service_endpoint(&self) -> Result<JsValue, serde_wasm_bindgen::Error> {
+        match serde_wasm_bindgen::to_value(&self.service_endpoint) {
+            Err(error) => Err(error),
+            Ok(val) => Ok(val),
+        }
     }
 }
