@@ -27,6 +27,22 @@ pub struct KeyPair {
     pub revoked: bool,
     #[wasm_bindgen(skip)]
     pub controller: Option<String>,
+    #[wasm_bindgen(skip)]
+    pub blockchain_account_id: Option<String>,
+    #[wasm_bindgen(skip)]
+    pub public_key_hex: Option<String>,
+    #[wasm_bindgen(skip)]
+    pub public_key_base64: Option<String>,
+    #[wasm_bindgen(skip)]
+    pub public_key_pem: Option<String>,
+    #[wasm_bindgen(skip)]
+    pub private_key_hex: Option<String>,
+    #[wasm_bindgen(skip)]
+    pub private_key_base64: Option<String>,
+    #[wasm_bindgen(skip)]
+    pub private_key_pem: Option<String>,
+    #[wasm_bindgen(skip)]
+    pub value: Option<String>,
 }
 
 #[wasm_bindgen]
@@ -42,12 +58,12 @@ impl KeyPair {
         self.id = id;
     }
 
-    #[wasm_bindgen(getter)]
+    #[wasm_bindgen(getter, js_name = "type")]
     pub fn _type(&self) -> String {
         self._type.clone()
     }
 
-    #[wasm_bindgen(setter)]
+    #[wasm_bindgen(setter, js_name = "type")]
     pub fn set_type(&mut self, _type: String) {
         self._type = _type;
     }
@@ -62,42 +78,42 @@ impl KeyPair {
         self.context = context;
     }
 
-    #[wasm_bindgen(getter)]
+    #[wasm_bindgen(getter, js_name = "public")]
     pub fn public_key_base58(&self) -> Option<String> {
         self.public_key_base58.clone()
     }
 
-    #[wasm_bindgen(setter)]
+    #[wasm_bindgen(setter, js_name = "publicKeyBase58")]
     pub fn set_public_key_base58(&mut self, public_key_base58: Option<String>) {
         self.public_key_base58 = public_key_base58;
     }
 
-    #[wasm_bindgen(getter)]
+    #[wasm_bindgen(getter, js_name = "privateKeyBase58")]
     pub fn private_key_base58(&self) -> Option<String> {
         self.private_key_base58.clone()
     }
 
-    #[wasm_bindgen(setter)]
+    #[wasm_bindgen(setter, js_name = "privateKeyBase58")]
     pub fn set_private_key_base58(&mut self, private_key_base58: Option<String>) {
         self.private_key_base58 = private_key_base58;
     }
 
-    #[wasm_bindgen(getter)]
+    #[wasm_bindgen(getter, js_name = "publicKeyMultibase")]
     pub fn public_key_multibase(&self) -> Option<String> {
         self.public_key_multibase.clone()
     }
 
-    #[wasm_bindgen(setter)]
+    #[wasm_bindgen(setter, js_name = "publicKeyMultibase")]
     pub fn set_public_key_multibase(&mut self, public_key_multibase: Option<String>) {
         self.public_key_multibase = public_key_multibase;
     }
 
-    #[wasm_bindgen(getter)]
+    #[wasm_bindgen(getter, js_name = "privateKeyMultibase")]
     pub fn private_key_multibase(&self) -> Option<String> {
         self.private_key_multibase.clone()
     }
 
-    #[wasm_bindgen(setter)]
+    #[wasm_bindgen(setter, js_name = "privateKeyMultibase")]
     pub fn set_private_key_multibase(&mut self, public_key_multibase: Option<String>) {
         self.public_key_multibase = public_key_multibase;
     }
@@ -110,6 +126,82 @@ impl KeyPair {
     #[wasm_bindgen(setter)]
     pub fn set_controller(&mut self, controller: Option<String>) {
         self.controller = controller;
+    }
+
+    #[wasm_bindgen(getter, js_name = "blockchainAccountId")]
+    pub fn blockchain_account_id(&self) -> Option<String> {
+        self.blockchain_account_id.clone()
+    }
+
+    #[wasm_bindgen(setter, js_name = "blockchainAccountId")]
+    pub fn set_blockchain_account_id(&mut self, blockchain_account_id: Option<String>) {
+        self.blockchain_account_id = blockchain_account_id;
+    }
+
+    #[wasm_bindgen(getter, js_name = "publicKeyHex")]
+    pub fn public_key_hex(&self) -> Option<String> {
+        self.public_key_hex.clone()
+    }
+
+    #[wasm_bindgen(setter, js_name = "publicKeyHex")]
+    pub fn set_public_key_hex(&mut self, public_key_hex: Option<String>) {
+        self.public_key_hex = public_key_hex;
+    }
+    #[wasm_bindgen(getter, js_name = "publicKeyBase64")]
+    pub fn public_key_base64(&self) -> Option<String> {
+        self.public_key_base64.clone()
+    }
+
+    #[wasm_bindgen(setter, js_name = "publicKeyBase64")]
+    pub fn set_public_key_base64(&mut self, public_key_base64: Option<String>) {
+        self.public_key_base64 = public_key_base64;
+    }
+    #[wasm_bindgen(getter, js_name = "publicKeyPem")]
+    pub fn public_key_pem(&self) -> Option<String> {
+        self.public_key_pem.clone()
+    }
+
+    #[wasm_bindgen(setter, js_name = "publicKeyPem")]
+    pub fn set_public_key_pem(&mut self, public_key_pem: Option<String>) {
+        self.public_key_pem = public_key_pem;
+    }
+
+    #[wasm_bindgen(getter, js_name = "privateKeyHex")]
+    pub fn private_key_hex(&self) -> Option<String> {
+        self.private_key_hex.clone()
+    }
+
+    #[wasm_bindgen(setter, js_name = "privateKeyHex")]
+    pub fn set_private_key_hex(&mut self, private_key_hex: Option<String>) {
+        self.private_key_hex = private_key_hex;
+    }
+    #[wasm_bindgen(getter, js_name = "privateKeyBase64")]
+    pub fn private_key_base64(&self) -> Option<String> {
+        self.private_key_base64.clone()
+    }
+
+    #[wasm_bindgen(setter, js_name = "privateKeyBase64")]
+    pub fn set_private_key_base64(&mut self, private_key_base64: Option<String>) {
+        self.private_key_base64 = private_key_base64;
+    }
+    #[wasm_bindgen(getter, js_name = "privateKeyPem")]
+    pub fn private_key_pem(&self) -> Option<String> {
+        self.private_key_pem.clone()
+    }
+
+    #[wasm_bindgen(setter, js_name = "privateKeyPem")]
+    pub fn set_private_key_pem(&mut self, private_key_pem: Option<String>) {
+        self.private_key_pem = private_key_pem;
+    }
+
+    #[wasm_bindgen(getter)]
+    pub fn value(&self) -> Option<String> {
+        self.value.clone()
+    }
+
+    #[wasm_bindgen(setter)]
+    pub fn set_value(&mut self, value: Option<String>) {
+        self.value = value;
     }
 
     #[wasm_bindgen(js_name = "toObject")]
