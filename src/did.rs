@@ -10,7 +10,7 @@ use wasm_bindgen::JsValue;
 
 pub const DID_CONTEXT_URL: &str = "https://www.w3.org/ns/did/v1";
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone)]
 #[wasm_bindgen]
 pub struct DidDocument {
     #[serde(rename = "@context")]
