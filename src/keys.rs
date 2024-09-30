@@ -16,30 +16,41 @@ pub struct KeyPair {
     #[wasm_bindgen(skip)]
     pub context: Option<String>,
     #[wasm_bindgen(skip)]
+    #[serde(rename = "publicKeyBase58")]
     pub public_key_base58: Option<String>,
     #[wasm_bindgen(skip)]
+    #[serde(rename = "privateKeyBase58")]
     pub private_key_base58: Option<String>,
     #[wasm_bindgen(skip)]
+    #[serde(rename = "publicKeyMultibase")]
     pub public_key_multibase: Option<String>,
     #[wasm_bindgen(skip)]
+    #[serde(rename = "privateKeyMultibase")]
     pub private_key_multibase: Option<String>,
     #[wasm_bindgen(skip)]
     pub revoked: bool,
     #[wasm_bindgen(skip)]
     pub controller: Option<String>,
     #[wasm_bindgen(skip)]
+    #[serde(rename = "blockchainAccountId")]
     pub blockchain_account_id: Option<String>,
     #[wasm_bindgen(skip)]
+    #[serde(rename = "publicKeyHex")]
     pub public_key_hex: Option<String>,
     #[wasm_bindgen(skip)]
+    #[serde(rename = "publicKeyBase64")]
     pub public_key_base64: Option<String>,
     #[wasm_bindgen(skip)]
+    #[serde(rename = "publicKeyPem")]
     pub public_key_pem: Option<String>,
     #[wasm_bindgen(skip)]
+    #[serde(rename = "privateKeyHex")]
     pub private_key_hex: Option<String>,
     #[wasm_bindgen(skip)]
+    #[serde(rename = "privateKeyBase64")]
     pub private_key_base64: Option<String>,
     #[wasm_bindgen(skip)]
+    #[serde(rename = "privateKeyPem")]
     pub private_key_pem: Option<String>,
     #[wasm_bindgen(skip)]
     pub value: Option<String>,
