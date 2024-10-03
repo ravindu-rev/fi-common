@@ -48,6 +48,36 @@ pub trait KeyPairToDidDocument {
 
 #[wasm_bindgen]
 impl DidDocument {
+    #[wasm_bindgen(js_name = "getKeyPair")]
+    pub fn get_key_pair(&self, key_id_fragment: &str) -> Result<KeyPair, Error> {
+        let key_id = format!("{}#{}", self.id, key_id_fragment);
+
+        if self
+            .verification_method
+            .as_ref()
+            .is_some_and(|val| val.len() > 0)
+            || self.key_agreement.as_ref().is_some_and(|val| val.len() > 0)
+        {
+            let verification_method = self.verification_method.as_ref().unwrap();
+            let key_agreement = self.key_agreement.as_ref().unwrap();
+
+            let public_key: KeyPair;
+            if verification_method.len() > 0
+                && verification_method[0]
+                    .id
+                    .as_ref()
+                    .is_some_and(|val| val.eq(&key_id))
+            {
+                public_key = verification_method[0].clone();
+            } else {
+                public_key = key_agreement[0].clone();
+            }
+            return Ok(public_key);
+        }
+
+        return Err(Error::new("No key pair could be found."));
+    }
+
     #[cfg(feature = "wasm")]
     #[wasm_bindgen(js_name = "toObject")]
     pub fn to_object(&self) -> Result<JsValue, serde_wasm_bindgen::Error> {
