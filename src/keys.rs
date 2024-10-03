@@ -1,5 +1,6 @@
 use crate::error::Error;
 use serde::{Deserialize, Serialize};
+use serde_json::Value;
 use wasm_bindgen::prelude::wasm_bindgen;
 #[cfg(feature = "wasm")]
 use wasm_bindgen::JsValue;
@@ -37,11 +38,17 @@ pub struct KeyPair {
     #[serde(rename = "publicKeyHex")]
     pub public_key_hex: Option<String>,
     #[wasm_bindgen(skip)]
+    #[serde(rename = "ethereumAddress")]
+    pub ethereum_address: Option<String>,
+    #[wasm_bindgen(skip)]
     #[serde(rename = "publicKeyBase64")]
     pub public_key_base64: Option<String>,
     #[wasm_bindgen(skip)]
     #[serde(rename = "publicKeyPem")]
     pub public_key_pem: Option<String>,
+    #[wasm_bindgen(skip)]
+    #[serde(rename = "publicKeyJwk")]
+    pub public_key_jwk: Option<Value>,
     #[wasm_bindgen(skip)]
     #[serde(rename = "privateKeyHex")]
     pub private_key_hex: Option<String>,
@@ -106,6 +113,40 @@ impl KeyPair {
     #[wasm_bindgen(setter, js_name = "privateKeyBase58")]
     pub fn set_private_key_base58(&mut self, private_key_base58: Option<String>) {
         self.private_key_base58 = private_key_base58;
+    }
+
+    #[wasm_bindgen(getter, js_name = "publicKeyJwk")]
+    pub fn public_key_jwk(&self) -> JsValue {
+        match self.public_key_jwk.clone() {
+            Some(jwk) => match serde_wasm_bindgen::to_value(&jwk) {
+                Err(_error) => return JsValue::null(),
+                Ok(val) => val,
+            },
+            None => return JsValue::null(),
+        }
+    }
+
+    #[wasm_bindgen(setter, js_name = "publicKeyJwk")]
+    pub fn set_public_key_jwk(&mut self, public_key_jwk: JsValue) -> Result<(), Error> {
+        match public_key_jwk.is_object() {
+            true => match serde_wasm_bindgen::from_value(public_key_jwk) {
+                Err(error) => return Err(Error::new(error.to_string().as_str())),
+                Ok(val) => self.public_key_jwk = Some(val),
+            },
+            false => self.public_key_jwk = None,
+        }
+
+        Ok(())
+    }
+
+    #[wasm_bindgen(getter, js_name = "ethereumAddress")]
+    pub fn ethereum_address(&self) -> Option<String> {
+        self.ethereum_address.clone()
+    }
+
+    #[wasm_bindgen(setter, js_name = "ethereumAddress")]
+    pub fn set_ethereum_address(&mut self, ethereum_address: Option<String>) {
+        self.ethereum_address = ethereum_address;
     }
 
     #[wasm_bindgen(getter, js_name = "publicKeyMultibase")]
