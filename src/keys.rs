@@ -14,7 +14,7 @@ pub struct KeyPair {
     pub _type: String,
     #[serde(rename = "@context")]
     #[wasm_bindgen(skip)]
-    pub context: Option<String>,
+    pub context: Option<Vec<String>>,
     #[wasm_bindgen(skip)]
     #[serde(rename = "publicKeyBase58")]
     pub public_key_base58: Option<String>,
@@ -27,8 +27,7 @@ pub struct KeyPair {
     #[wasm_bindgen(skip)]
     #[serde(rename = "privateKeyMultibase")]
     pub private_key_multibase: Option<String>,
-    #[wasm_bindgen(skip)]
-    pub revoked: bool,
+    pub revoked: Option<bool>,
     #[wasm_bindgen(skip)]
     pub controller: Option<String>,
     #[wasm_bindgen(skip)]
@@ -80,12 +79,12 @@ impl KeyPair {
     }
 
     #[wasm_bindgen(getter)]
-    pub fn context(&self) -> Option<String> {
+    pub fn context(&self) -> Option<Vec<String>> {
         self.context.clone()
     }
 
     #[wasm_bindgen(setter)]
-    pub fn set_context(&mut self, context: Option<String>) {
+    pub fn set_context(&mut self, context: Option<Vec<String>>) {
         self.context = context;
     }
 

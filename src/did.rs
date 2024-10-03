@@ -20,23 +20,23 @@ pub struct DidDocument {
     pub id: String,
     #[wasm_bindgen(skip)]
     #[serde(rename = "verificationMethod")]
-    pub verification_method: Vec<KeyPair>,
+    pub verification_method: Option<Vec<KeyPair>>,
     #[wasm_bindgen(skip)]
-    pub authentication: Vec<String>,
+    pub authentication: Option<Vec<String>>,
     #[wasm_bindgen(skip)]
     #[serde(rename = "assertionMethod")]
-    pub assertion_method: Vec<String>,
+    pub assertion_method: Option<Vec<String>>,
     #[wasm_bindgen(skip)]
     #[serde(rename = "capabilityDelegation")]
-    pub capability_delegation: Vec<String>,
+    pub capability_delegation: Option<Vec<String>>,
     #[wasm_bindgen(skip)]
     #[serde(rename = "capabilityInvocation")]
-    pub capability_invocation: Vec<String>,
+    pub capability_invocation: Option<Vec<String>>,
     #[serde(rename = "keyAgreement")]
     #[wasm_bindgen(skip)]
-    pub key_agreement: Vec<KeyPair>,
+    pub key_agreement: Option<Vec<KeyPair>>,
     #[wasm_bindgen(skip)]
-    pub services: Vec<Service>,
+    pub services: Option<Vec<Service>>,
 }
 
 pub trait KeyPairToDidDocument {
@@ -48,22 +48,6 @@ pub trait KeyPairToDidDocument {
 
 #[wasm_bindgen]
 impl DidDocument {
-    #[wasm_bindgen(js_name = "getKeyPair")]
-    pub fn get_key_pair(&self, key_id_fragment: &str) -> Result<KeyPair, Error> {
-        let key_id = format!("{}#{}", self.id, key_id_fragment);
-
-        let v_id = self.verification_method[0].id.clone();
-
-        let public_key: KeyPair;
-        if v_id.is_some_and(|val| val.eq(&key_id)) {
-            public_key = self.verification_method[0].clone();
-        } else {
-            public_key = self.key_agreement[0].clone();
-        }
-
-        Ok(public_key)
-    }
-
     #[cfg(feature = "wasm")]
     #[wasm_bindgen(js_name = "toObject")]
     pub fn to_object(&self) -> Result<JsValue, serde_wasm_bindgen::Error> {
@@ -96,74 +80,84 @@ impl DidDocument {
 
     #[cfg(feature = "wasm")]
     #[wasm_bindgen(setter, js_name = "verificationMethod")]
-    pub fn set_verification_method(&mut self, verification_method: Vec<KeyPair>) {
+    pub fn set_verification_method(&mut self, verification_method: Option<Vec<KeyPair>>) {
         self.verification_method = verification_method;
     }
 
     #[cfg(feature = "wasm")]
     #[wasm_bindgen(getter, js_name = "verificationMethod")]
-    pub fn verification_method(&self) -> Vec<KeyPair> {
+    pub fn verification_method(&self) -> Option<Vec<KeyPair>> {
         self.verification_method.clone()
     }
 
     #[cfg(feature = "wasm")]
     #[wasm_bindgen(setter)]
-    pub fn set_authentication(&mut self, authentication: Vec<String>) {
+    pub fn set_authentication(&mut self, authentication: Option<Vec<String>>) {
         self.authentication = authentication;
     }
 
     #[cfg(feature = "wasm")]
     #[wasm_bindgen(getter)]
-    pub fn authentication(&self) -> Vec<String> {
+    pub fn authentication(&self) -> Option<Vec<String>> {
         self.authentication.clone()
     }
 
     #[cfg(feature = "wasm")]
     #[wasm_bindgen(setter, js_name = "assertionMethod")]
-    pub fn set_assertion_method(&mut self, assertion_method: Vec<String>) {
+    pub fn set_assertion_method(&mut self, assertion_method: Option<Vec<String>>) {
         self.assertion_method = assertion_method;
     }
 
     #[cfg(feature = "wasm")]
     #[wasm_bindgen(getter, js_name = "assertionMethod")]
-    pub fn assertion_method(&self) -> Vec<String> {
+    pub fn assertion_method(&self) -> Option<Vec<String>> {
         self.assertion_method.clone()
     }
 
     #[cfg(feature = "wasm")]
     #[wasm_bindgen(setter, js_name = "capabilityDelegation")]
-    pub fn set_capability_delegation(&mut self, capability_delegation: Vec<String>) {
+    pub fn set_capability_delegation(&mut self, capability_delegation: Option<Vec<String>>) {
         self.capability_delegation = capability_delegation;
     }
 
     #[cfg(feature = "wasm")]
     #[wasm_bindgen(getter, js_name = "capabilityDelegation")]
-    pub fn capability_delegation(&self) -> Vec<String> {
+    pub fn capability_delegation(&self) -> Option<Vec<String>> {
         self.capability_delegation.clone()
     }
 
     #[cfg(feature = "wasm")]
     #[wasm_bindgen(setter, js_name = "capabilityInvocation")]
-    pub fn set_capability_invocation(&mut self, capability_invocation: Vec<String>) {
+    pub fn set_capability_invocation(&mut self, capability_invocation: Option<Vec<String>>) {
         self.capability_invocation = capability_invocation;
     }
 
     #[cfg(feature = "wasm")]
     #[wasm_bindgen(getter, js_name = "capabilityInvocation")]
-    pub fn capability_invocation(&self) -> Vec<String> {
+    pub fn capability_invocation(&self) -> Option<Vec<String>> {
         self.capability_invocation.clone()
     }
 
     #[cfg(feature = "wasm")]
     #[wasm_bindgen(setter, js_name = "keyAgreement")]
-    pub fn set_key_agreement(&mut self, key_agreement: Vec<KeyPair>) {
+    pub fn set_key_agreement(&mut self, key_agreement: Option<Vec<KeyPair>>) {
         self.key_agreement = key_agreement;
     }
 
     #[cfg(feature = "wasm")]
     #[wasm_bindgen(getter, js_name = "keyAgreement")]
-    pub fn key_agreement(&self) -> Vec<KeyPair> {
+    pub fn key_agreement(&self) -> Option<Vec<KeyPair>> {
         self.key_agreement.clone()
+    }
+
+    #[cfg(feature = "wasm")]
+    pub fn set_services(&mut self, services: Option<Vec<Service>>) {
+        self.services = services;
+    }
+
+    #[cfg(feature = "wasm")]
+    pub fn services(&self) -> Option<Vec<Service>> {
+        self.services.clone()
     }
 }
 
