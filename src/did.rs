@@ -15,7 +15,7 @@ pub const DID_CONTEXT_URL: &str = "https://www.w3.org/ns/did/v1";
 pub struct DidDocument {
     #[serde(rename = "@context")]
     #[wasm_bindgen(skip)]
-    pub context: Vec<String>,
+    pub context: Vec<Value>,
     #[wasm_bindgen(skip)]
     pub id: String,
     #[wasm_bindgen(skip)]
