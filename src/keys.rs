@@ -50,6 +50,9 @@ pub struct KeyPair {
     #[serde(rename = "publicKeyJwk")]
     pub public_key_jwk: Option<Value>,
     #[wasm_bindgen(skip)]
+    #[serde(rename = "privateKeyJwk")]
+    pub private_key_jwk: Option<Value>,
+    #[wasm_bindgen(skip)]
     #[serde(rename = "privateKeyHex")]
     pub private_key_hex: Option<String>,
     #[wasm_bindgen(skip)]
@@ -118,6 +121,17 @@ impl KeyPair {
     #[wasm_bindgen(getter, js_name = "publicKeyJwk")]
     pub fn public_key_jwk(&self) -> JsValue {
         match self.public_key_jwk.clone() {
+            Some(jwk) => match serde_wasm_bindgen::to_value(&jwk) {
+                Err(_error) => return JsValue::null(),
+                Ok(val) => val,
+            },
+            None => return JsValue::null(),
+        }
+    }
+
+    #[wasm_bindgen(getter, js_name = "privateKeyJwk")]
+    pub fn private_key_jwk(&self) -> JsValue {
+        match self.private_key_jwk.clone() {
             Some(jwk) => match serde_wasm_bindgen::to_value(&jwk) {
                 Err(_error) => return JsValue::null(),
                 Ok(val) => val,
