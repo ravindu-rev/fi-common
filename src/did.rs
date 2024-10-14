@@ -86,14 +86,22 @@ impl DidDocument {
 
     #[cfg(feature = "wasm")]
     #[wasm_bindgen(getter)]
-    pub fn context(&self) -> Vec<String> {
-        self.context.clone()
+    pub fn context(&self) -> JsValue {
+        use wasm_bindgen::JsValue;
+
+        match serde_wasm_bindgen::to_value(&self.context) {
+            Ok(val) => val,
+            Err(_error) => JsValue::NULL,
+        }
     }
 
     #[cfg(feature = "wasm")]
     #[wasm_bindgen(setter)]
-    pub fn set_context(&mut self, context: Vec<String>) {
-        self.context = context;
+    pub fn set_context(&mut self, context: JsValue) {
+        self.context = match serde_wasm_bindgen::from_value(context) {
+            Ok(val) => val,
+            Err(_error) => Vec::new(),
+        };
     }
 
     #[cfg(feature = "wasm")]
